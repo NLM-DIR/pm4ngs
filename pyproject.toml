@@ -24,10 +24,6 @@ classifiers = [
     "Topic :: Scientific/Engineering :: Bio-Informatics",
 ]
 
-packages = [
-    { include = "pm4ngs", from = "src" },
-]
-
 requires-python = ">=3.11,<4.0"
 dependencies = [
     "bioconda2biocontainer",
@@ -53,7 +49,7 @@ dependencies = [
 ]
 
 [tool.poetry]
-packages = [{ include = "sra", from = "src" }]
+packages = [{ include = "pm4ngs", from = "src" }]
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0", "poetry-dynamic-versioning>=1.0.0,<2.0.0"]
