@@ -26,7 +26,8 @@ def fastqc_table(
     """
     samples_data: Dict[str, dict] = {}
     table_lines = [
-        '| Sample | Fastq | FastQC<br>Report | No of Reads<br>in fastq | Seq<br> Len | %GC | Poor<br>Quality | Fail<br>Tests | Adapters |',
+        '| Sample | Fastq | FastQC<br>Report | No of Reads<br>in fastq | '
+        'Seq<br> Len | %GC | Poor<br>Quality | Fail<br>Tests | Adapters |',
         '| --- | --- | --- |--- | --- | --- | --- | --- | --- |'
     ]
     for sample in sample_list:
@@ -39,7 +40,8 @@ def fastqc_table(
             row.append(' --- ')
         fastqc_zip_path = os.path.relpath(os.path.join(fastqc_path, sample + '_fastqc.zip'))
         if os.path.exists(fastqc_zip_path) and os.path.getsize(fastqc_zip_path) != 0:
-            tests, tot_seq, poor_quality, seq_len, gc_content, adapter = parse_fastqc_zip(fastqc_zip_path)
+            tests, tot_seq, poor_quality, seq_len, gc_content, adapter = parse_fastqc_zip(
+                fastqc_zip_path)
             samples_data[sample] = {'fastqc': {
                 'tests': tests,
                 'tot_seq': tot_seq,
@@ -80,7 +82,9 @@ def fastqc_trimmomatic_table(
             table_string: Markdown-formatted table as a string.
     """
     table_lines = [
-        '| Sample | Trimmed<br>Fastq | FastQC<br>Report | No of Reads<br>in fastq | Removed<br>Reads | Seq<br> Len | %GC | Poor<br>Quality | Fail<br>Tests | Adapters |',
+        '| Sample | Trimmed<br>Fastq | FastQC<br>Report | No of Reads<br>in fastq'
+        ' | Removed<br>Reads | '
+        'Seq<br> Len | %GC | Poor<br>Quality | Fail<br>Tests | Adapters |',
         '| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |'
     ]
     for sample in sample_list:
@@ -90,12 +94,13 @@ def fastqc_trimmomatic_table(
         # Find trimmed fastqc zip
         files = [
             f for ds, dr, files in os.walk(trimmomatic_path) for f in files
-            if f.startswith(sample) and f.endswith('_fastqc.zip')
-               and os.path.getsize(os.path.join(trimmomatic_path, f)) != 0
+            if f.startswith(sample) and f.endswith('_fastqc.zip') and os.path.getsize(
+                os.path.join(trimmomatic_path, f)) != 0
         ]
         if len(files) == 1:
             fastqc_zip_path = os.path.relpath(os.path.join(trimmomatic_path, files[0]))
-            tests, tot_seq, poor_quality, seq_len, gc_content, adapter = parse_fastqc_zip(fastqc_zip_path)
+            tests, tot_seq, poor_quality, seq_len, gc_content, adapter = (
+                parse_fastqc_zip(fastqc_zip_path))
             row.append("{:,}".format(tot_seq))
             removed_reads = samples_data[sample]['fastqc']['tot_seq'] - tot_seq \
                 if sample in samples_data and 'fastqc' in samples_data[sample] else 0
