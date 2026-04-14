@@ -123,9 +123,13 @@ def find_file_print_link_size(folder_path, prefix, sufix, size_unit, ifempty):
     :param ifempty: Use this if the output is empty
     :return:
     """
-    files = [f for ds, dr, files in os.walk(folder_path)
-             for f in files if f.startswith(prefix) and f.endswith(sufix)
-             and os.path.getsize(os.path.join(folder_path, f)) != 0]
+    files = [
+        f for ds, dr, files in os.walk(folder_path)
+        for f in files
+        if f.startswith(prefix) and f.endswith(sufix)
+        and os.path.exists(os.path.join(folder_path, f))
+        and os.path.getsize(os.path.join(folder_path, f)) != 0
+    ]
     if len(files) == 1:
         f = os.path.relpath(os.path.join(folder_path, files[0]))
         return get_link_size(f, size_unit, ifempty)
