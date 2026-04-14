@@ -1,6 +1,6 @@
 [project]
 name = "pm4ngs"
-version = "0.0.0"
+dynamic = ["version"]
 description = "PM4NGS generates a standard organizational structure for Next Generation Sequencing (ngs) data analysis"
 license = "Public Domain"
 authors = [{ name = "Roberto Vera Alvarez", email = "veraalva@ncbi.nlm.nih.gov" }]
@@ -50,10 +50,11 @@ dependencies = [
 
 [tool.poetry]
 packages = [{ include = "pm4ngs", from = "src" }]
+version = "0.0.0"
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0", "poetry-dynamic-versioning>=1.0.0,<2.0.0"]
-build-backend = "poetry.core.masonry.api"
+build-backend = "poetry_dynamic_versioning.backend"
 
 
 [tool.poetry.scripts]
